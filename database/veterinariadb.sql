@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS veterinariadb;
+
 CREATE DATABASE veterinariadb;
 USE veterinariadb;
 
@@ -154,7 +156,7 @@ INSERT INTO CLIENTES(nombres, apellidos, dni, claveacceso, nombreusuario ) VALUE
 ('Angel Marcos', 'Perez', '73963911', '1234', "angel"),
 ('Maria', 'Munayco', '87654321',null, null),
 ('Juan', 'Perez', '12345678', null, null),
-('Arturo', 'Saravia', '87654321', null, null);
+('Arturo', 'Saravia', '87054321', null, null);
 
 INSERT INTO ANIMALES(nombreanimal) VALUES
 ('Perro'),
@@ -173,5 +175,7 @@ INSERT INTO RAZAS(nombreraza, idanimal) VALUES
 ('Dorado', 4),
 ('Beta', 4);
 
-CALL SPU_REGISTRAR_MASCOTA(2, 1, "bALTO", "HDHASDHA", "marron", "M");
-CALL SPU_REGISTRAR_MASCOTA(2, 1, "lUNA", "HDHASDHA", "NEGRO", "h");
+CALL SPU_REGISTRAR_MASCOTA(2, 1, "Luna", "Labrador1.jpg", "Marron", "M");
+CALL SPU_REGISTRAR_MASCOTA(2, 2, "Rambo", "pastorAleman1.jpg", "Mostsa y Negro", "H");
+CALL SPU_REGISTRAR_MASCOTA(1, 3, "Balto", "Bulgog.jpg", "Crema", "M");
+CALL SPU_REGISTRAR_MASCOTA(1, 5, "Blanca", "siames1.jpg", "Mostasa marrón", "H");

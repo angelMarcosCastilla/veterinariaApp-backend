@@ -30,18 +30,22 @@ if(isset($_GET["operacion"])){
 if(isset($_POST["operacion"])){
 
   if($_POST["operacion"] = "registrarmascota"){
-    $fotografia = $_POST["fotografia"];
-    $imagen_base64 = urldecode($fotografia);
-    $imgFile = base64_decode($imagen_base64);
-    $nameFile = uniqid() . '.jpg';    
-    $file = '../img/' . $nameFile;
-    file_put_contents($file, $data);
-  
+    $uploadDirectory = "";
+    $fileName = "";
+    $uploadFilePath = "";
+
+    if ($_POST['fotografia'] != "") {
+      $uploadDirectory = "../img/";
+      $fileName = sha1(date('c')) . '.jpg';
+      $uploadFilePath = $uploadDirectory . $fileName;
+
+      file_put_contents($uploadFilePath, base64_decode($_POST['fotografia']));
+    }
     $data = [
       "idcliente" => $_POST["idcliente"],
       "idraza" => $_POST["idraza"],
       "nombre" => $_POST["nombre"],
-      "fotografia" => $nameFile,
+      "fotografia" => $fileName,
       "genero" => $_POST["genero"],
       "color" => $_POST["color"]
     ];
