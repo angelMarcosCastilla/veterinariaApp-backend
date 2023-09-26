@@ -36,11 +36,14 @@ class Cliente extends Conexion {
         $data['nombres'],
         $data['apellidos'],
         $data['dni'],
-        $data['telefono'],
-        $data['direccion'],
-        $data['genero'])
+        $data['genero'],
+        $data['claveacceso'],
+        $data['tipousuario'],
+        )
       );
       
+      return $consulta->fetchAll(PDO::FETCH_ASSOC);
+
     }catch(Exeption $e){
       die($e->getMessage());
     }

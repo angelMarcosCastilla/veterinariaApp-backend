@@ -21,10 +21,8 @@ CREATE TABLE CLIENTES(
   apellidos       VARCHAR(45) NOT NULL,
   dni             CHAR(8) NOT NULL,
   claveacceso     VARCHAR(90) NULL,
-  telefono        VARCHAR(9) NULL,
-  direccion       VARCHAR(45) NULL,
   genero          CHAR(1) NULL,
-  nombreusuario   VARCHAR(45) NULL,
+  tipousuario	  CHAR(1) DEFAULT 'D', 
   estado          BIT DEFAULT 1
 )ENGINE = INNODB;
 
@@ -61,12 +59,15 @@ CREATE PROCEDURE SPU_REGISTRAR_CLIENTE(
   IN _nombres VARCHAR(45),
   IN _apellidos VARCHAR(45), 
   IN _dni CHAR(8),
-  IN _telefono VARCHAR(45),
-  IN _direccion VARCHAR(45),
-  IN _genero CHAR(1)
+  IN _genero CHAR(1),
+  IN _claveacceso VARCHAR(90),
+  IN _tipousuario CHAR(1)
   )
 BEGIN
-  INSERT INTO CLIENTES(nombres, apellidos, dni, direccion, telefono, genero) VALUES (_nombres, _apellidos, _dni, _direccion, _telefono, _genero);
+  INSERT INTO CLIENTES(nombres, apellidos, dni,  genero, claveacceso, tipousuario )
+  VALUES (_nombres, _apellidos, _dni, _genero,_claveacceso, _tipousuario);
+  
+  SELECT LAST_INSERT_ID();
 END $$
 
 -- DETALLE MASCOTA POR CLIENTE
@@ -127,9 +128,9 @@ END $$
 -- lOGIN
 
 DELIMITER $$
-CREATE PROCEDURE SPU_LOGIN(IN _username VARCHAR(45))
+CREATE PROCEDURE SPU_LOGIN(IN _dni CHAR(8))
 BEGIN
-  SELECT * FROM CLIENTES WHERE nombreusuario = _username;
+  SELECT * FROM CLIENTES WHERE dni = _dni;
 END $$
 
 
@@ -152,11 +153,11 @@ BEGIN
   DELETE FROM MASCOTAS WHERE idmascota = _idmascota;
 END $$
 
-INSERT INTO CLIENTES(nombres, apellidos, dni, claveacceso, nombreusuario ) VALUES
-('Angel Marcos', 'Perez', '73963911', '1234', "angel"),
-('Maria', 'Munayco', '87654321',null, null),
-('Juan', 'Perez', '12345678', null, null),
-('Arturo', 'Saravia', '87054321', null, null);
+INSERT INTO CLIENTES(nombres, apellidos, dni, claveacceso, tipousuario) VALUES
+('Angel Marcos', 'Perez', '73963911', '1234',"S"),
+('Maria', 'Munayco', '87654321',"1234",  "D"),
+('Juan', 'Perez', '12345678', null, "D"),
+('Arturo', 'Saravia', '87054321', null,  "D");
 
 INSERT INTO ANIMALES(nombreanimal) VALUES
 ('Perro'),

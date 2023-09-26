@@ -29,12 +29,20 @@ if(isset($_POST['operacion'])){
       "nombres" => $_POST["nombres"],
       "apellidos" => $_POST["apellidos"],
       "dni" => $_POST["dni"],
-      "telefono" => $_POST["telefono"],
-      "direccion" => $_POST["direccion"],
       "genero" => $_POST["genero"],
+      "tipousuario" => $_POST["tipousuario"],
+      "claveacceso" => $_POST["claveacceso"],
     ];
     
-    $cliente->registrarCliente($data);
+    $data = $cliente->registrarCliente($data);
+
+    echo json_encode(
+      [
+        "success" => true,
+        "message" => "Cliente registrado correctamente",
+        "data" => $data[0]
+      ]
+    );
 
   }
 
@@ -42,14 +50,13 @@ if(isset($_POST['operacion'])){
   if($_POST["operacion"] == "login"){
     $username = $_POST["nombreusuario"];
     $password = $_POST["claveacceso"];
-
     $datos = $cliente->login($username);
 
     if(count($datos) == 0){
       echo json_encode(
         [
           "success" => false,
-          "message" => "Usuario o contraseña incorrectos"
+          "message" => "Usuario o contraseña incorrectos",
         ]
       );
     }
@@ -66,7 +73,8 @@ if(isset($_POST['operacion'])){
     echo json_encode(
       [
         "success" => true,
-        "message" => "Bienvenido Al sistema"
+        "message" => "Bienvenido Al sistema",
+        "data" => $datos[0]
       ]
     );
   }
